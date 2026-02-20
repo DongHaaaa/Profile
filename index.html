@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Dong Dai Ha (Haz)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- CẤU HÌNH GIAO DIỆN NÂNG CAO --- */
+        :root {
+            --bg-dark: #0f0c29;
+            --bg-gradient: linear-gradient(to right, #24243e, #302b63, #0f0c29);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-color: #00d2ff;   /* Màu xanh Cyan hiện đại */
+            --highlight: #3a7bd5;      /* Màu xanh dương */
+            --text-main: #ffffff;
+            --text-sub: #b3b3b3;
+            --neon-glow: 0 0 10px rgba(0, 210, 255, 0.5), 0 0 20px rgba(0, 210, 255, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 30px 15px;
+        }
+
+        /* Khung chính với hiệu ứng kính mờ (Glassmorphism) */
+        .container {
+            width: 100%;
+            max-width: 650px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- HEADER --- */
+        .header {
+            text-align: center;
+            padding: 50px 20px 40px; 
+            background: radial-gradient(circle at top, rgba(58, 123, 213, 0.1), transparent 70%);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+        }
+
+        .avatar-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--highlight), var(--accent-color));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            font-weight: bold;
+            box-shadow: var(--neon-glow);
+            border: 3px solid rgba(255,255,255,0.2);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* Hiệu ứng vòng xoay quanh avatar */
+        .avatar-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -5px; left: -5px; right: -5px; bottom: -5px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            border-top-color: var(--accent-color);
+            border-bottom-color: var(--highlight);
+            animation: spin 3s linear infinite;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        .name { 
+            font-size: 32px; 
+            font-weight: 700; 
+            margin-bottom: 10px; 
+            letter-spacing: 1px;
+        }
+
+        /* --- PHẦN ALIAS (Biệt danh) ĐÃ ĐƯỢC CHỈNH SỬA --- */
+        .alias { 
+            font-family: 'JetBrains Mono', monospace; /* Font code chuẩn */
+            color: var(--accent-color); 
+            font-weight: 700; 
+            font-size: 20px; 
+            
+            /* Hiệu ứng cân đối và làm đẹp */
+            display: inline-block;
+            padding: 6px 14px;
+            background: rgba(0, 210, 255, 0.08); /* Nền mờ nhẹ */
+            border-radius: 8px;
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            text-shadow: 0 0 10px rgba(0, 210, 255, 0.6); /* Phát sáng Neon */
+            letter-spacing: 1px; /* Giãn chữ cho thoáng */
+        }
+
+        .job-title { 
+            color: var(--text-sub); 
+            margin-top: 15px; 
+            font-size: 16px; 
+        }
+
+        /* --- ACCORDION (Menu xổ xuống) --- */
+        details {
+            border-bottom: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+
+        details:last-child { border-bottom: none; }
+
+        summary {
+            padding: 20px 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 17px;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+            color: var(--text-main);
+        }
+
+        summary::-webkit-details-marker { display: none; }
+
+        summary:hover { background: rgba(255, 255, 255, 0.03); }
+
+        summary i { 
+            color: var(--accent-color); 
+            width: 25px; 
+            margin-right: 10px;
+        }
+
+        /* Mũi tên xoay */
+        summary::after {
+            content: '\f107'; /* FontAwesome Angle Down */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            transition: transform 0.3s;
+        }
+
+        details[open] summary {
+            background: rgba(0, 210, 255, 0.1);
+            color: var(--accent-color);
+        }
+
+        details[open] summary::after {
+            transform: rotate(180deg);
+        }
+
+        /* Nội dung bên trong */
+        .content {
+            padding: 20px 25px;
+            background: rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.4s ease;
+            line-height: 1.6;
+            color: #d1d1d1;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- TAGS (SKILLS) --- */
+        .tag-container { display: flex; flex-wrap: wrap; gap: 10px; }
+        
+        .tag {
+            background: rgba(58, 123, 213, 0.2);
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            border: 1px solid rgba(58, 123, 213, 0.4);
+            color: var(--accent-color);
+            font-family: 'JetBrains Mono', monospace;
+            transition: 0.3s;
+        }
+
+        .tag:hover {
+            background: var(--accent-color);
+            color: #000;
+            box-shadow: 0 0 10px var(--accent-color);
+        }
+
+        /* --- OJ CARDS --- */
+        .oj-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 12px;
+            border: 1px solid var(--glass-border);
+            text-decoration: none;
+            display: block;
+            color: var(--text-main);
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .oj-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(5px);
+            border-color: var(--accent-color);
+        }
+
+        .oj-card::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 4px;
+            background: var(--highlight);
+        }
+
+        .oj-header { display: flex; justify-content: space-between; margin-bottom: 5px; }
+        .oj-name { font-weight: 700; color: var(--accent-color); }
+        .oj-stats { font-size: 13px; color: var(--text-sub); display: flex; gap: 15px; margin-top: 5px;}
+        .stat-val { color: white; font-weight: bold; font-family: 'JetBrains Mono', monospace;}
+
+        /* --- AWARD LIST --- */
+        ul { list-style: none; }
+        li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        li::before {
+            content: '🏆';
+            position: absolute;
+            left: -5px;
+            top: 2px;
+            font-size: 14px;
+        }
+        li strong { color: var(--accent-color); }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <div class="avatar-wrapper">
+                <div class="avatar-placeholder">H</div>
+            </div>
+            <h1 class="name">Đồng Đại Hà</h1>
+            
+            <div class="alias">&lt;Haz /&gt;</div>
+            
+            <div class="job-title">Game Developer & Competitive Programmer</div>
+        </div>
+
+        <details>
+            <summary>
+                <span><i class="fa-solid fa-user"></i> Personal Information</span>
+            </summary>
+            <div class="content">
+                <p><strong>Full Name:</strong> Đồng Đại Hà</p>
+                <p><strong>Date of Birth:</strong> Sep 01, 2007</p>
+                <p><strong>Nationality:</strong> Vietnam</p>
+                <p><strong>Email:</strong> dongdaiha9@gmail.com</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>
+                <span><i class="fa-solid fa-user"></i> Education</span>
+            </summary>
+            <div class="content">
+                <p><strong>University:</strong> Post and Telecommunications Institute of Technology (PTIT)</p>
+                <p><strong>Major:</strong> Game Design and Development</p>
+                <p><strong>Duration:</strong> 2025 – 2029 (Expected)</p>
+                <p><strong>Location:</strong> Hanoi, Vietnam</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>
+                <span><i class="fa-solid fa-code"></i> Skills & Expertise</span>
+            </summary>
+            <div class="content">
+                <p style="margin-bottom: 15px; color: var(--text-sub);">Tech Stack:</p>
+                <div class="tag-container">
+                    <span class="tag">C++</span>
+                    <span class="tag">Python</span>
+                    <span class="tag">C#</span>
+                    <span class="tag">Unity/Godot</span>
+                    <span class="tag">Algorithms & DSA</span>
+                </div>
+            </div>
+        </details>
+
+        <details open>
+            <summary>
+                <span><i class="fa-solid fa-chart-line"></i> Competitive Profile</span>
+            </summary>
+            <div class="content">
+                <a href="https://oj.vnoi.info/user/dongdaiha9" target="_blank" class="oj-card">
+                    <div class="oj-header">
+                        <span class="oj-name">VNOI Online Judge</span>
+                    </div>
+                    <div class="oj-stats">
+                        <span>Solved: <span class="stat-val">200+</span></span>
+                        <span>Rating: <span class="stat-val">1400+</span></span>
+                    </div>
+                </a>
+
+                <a href="https://lqdoj.edu.vn/user/DONGHA" target="_blank" class="oj-card">
+                    <div class="oj-header">
+                        <span class="oj-name">LQDOJ</span>
+                    </div>
+                    <div class="oj-stats">
+                        <span>Solved: <span class="stat-val">100+</span></span> 
+                        <span>Rating: <span class="stat-val">1400+</span></span>
+                    </div>
+                </a>
+
+                <a href="https://luyencode.net/user/DongHa" target="_blank" class="oj-card">
+                    <div class="oj-header">
+                        <span class="oj-name">LuyenCode.net</span>
+                    </div>
+                    <div class="oj-stats">
+                        <span>Solved: <span class="stat-val">80+</span></span>
+                        <span>Points: <span class="stat-val">65+</span></span>
+                    </div>
+                </a>
+            </div>
+        </details>
+
+        <details> 
+            <summary>
+                <span><i class="fa-solid fa-trophy"></i> Honors & Awards</span>
+            </summary>
+            <div class="content">
+                <ul>
+                    <li><strong>2023:</strong> Giải ba học sinh giỏi tin học cấp trường </li>
+                    <li><strong>2023:</strong> Giải nhì tin học trẻ cấp huyện</li>
+                    <li><strong>2023:</strong> Giải ba tin học trẻ cấp tỉnh</li>
+                    <li><strong>2023:</strong> Giải khuyến khích học sinh giỏi tin học cấp tỉnh</li>
+
+                    <li><strong>2024:</strong> Giải nhất học sinh giỏi tin học cấp trường </li>
+                    <li><strong>2024:</strong> Giải nhất tin học trẻ cấp huyện</li>
+                    <li><strong>2024:</strong> Giải ba tin học trẻ cấp tỉnh</li>
+                    <li><strong>2024:</strong> Giải nhì học sinh giỏi tin học cấp tỉnh</li>
+                    <li><strong>2024:</strong> Giải nhì Young ICT Talent</li>
+
+                    <li><strong>2025:</strong> Giải nhất học sinh giỏi tin học cấp trường </li>
+                    <li><strong>2025:</strong> Giải nhì học sinh giỏi tin học cấp tỉnh</li>
+                </ul>
+            </div>
+        </details>
+
+    </div>
+
+</body>
+</html>
